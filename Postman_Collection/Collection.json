@@ -1,0 +1,285 @@
+{
+  "info": {
+    "_postman_id": "3b7b6627-fffc-42ad-a5f6-c6b456479f60",
+    "name": "Major_Capstone",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58367401",
+    "_collection_link": "https://go.postman.co/collection/58367401-3b7b6627-fffc-42ad-a5f6-c6b456479f60?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Small JSON",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "fileLocation",
+              "type": "file",
+              "src": [
+                "/C:/Users/user/Downloads/JsonMsgEmployeePayload.json"
+              ]
+            },
+            {
+              "key": "controlFile",
+              "type": "file",
+              "src": [
+                "/C:/Users/user/Desktop/Major_Capstone_Amex_Lumi/control-files/employee_control.properties"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/ingestions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "ingestions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Large CSV",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "fileLocation",
+              "type": "file",
+              "src": [
+                "/C:/Users/user/Downloads/phase2_employee_schema_test.csv"
+              ]
+            },
+            {
+              "key": "controlFile",
+              "type": "file",
+              "src": [
+                "/C:/Users/user/Desktop/Major_Capstone_Amex_Lumi/control-files/employee_control.properties"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/ingestions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "ingestions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Missing Control File",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "fileLocation",
+              "type": "file",
+              "src": [
+                "/C:/Users/user/Downloads/JsonMsgEmployeePayload.json"
+              ]
+            },
+            {
+              "key": "controlFile",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/ingestions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "ingestions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Missing Both Files",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "fileLocation",
+              "type": "file",
+              "src": []
+            },
+            {
+              "key": "controlFile",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/ingestions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "ingestions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Missing FIle Location",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "fileLocation",
+              "type": "file",
+              "src": []
+            },
+            {
+              "key": "controlFile",
+              "type": "file",
+              "src": [
+                "/C:/Users/user/Desktop/Major_Capstone_Amex_Lumi/control-files/employee_control.properties"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/ingestions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "ingestions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid File Format",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "fileLocation",
+              "type": "file",
+              "src": [
+                "/C:/Users/user/Downloads/Sign.jpg"
+              ]
+            },
+            {
+              "key": "controlFile",
+              "type": "file",
+              "src": [
+                "/C:/Users/user/Desktop/Major_Capstone_Amex_Lumi/control-files/employee_control.properties"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/ingestions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "ingestions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Employee Not Found",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/decrypt/EN40053",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "decrypt",
+            "EN40053"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Decrypted data",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/decrypt/6379526",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "decrypt",
+            "6379526"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
