@@ -88,7 +88,11 @@ def split_json(spark, input_file, output_directory):
 
     logger.info("Starting JSON file split")
 
-    df = spark.read.json(input_file)
+    df = (
+         spark.read
+         .option("multiline", True)
+         .json(input_file)
+    )
 
     record_count = df.count()
 
