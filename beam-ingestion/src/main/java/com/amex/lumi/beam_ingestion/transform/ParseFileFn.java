@@ -14,6 +14,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.time.Instant;
@@ -117,53 +118,96 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
             ProcessContext context
     ) throws Exception {
 
-        JsonNode root =
-                objectMapper.readTree(
-                        new File(fileLocation)
-                );
+        File file = new File(fileLocation);
 
-        if (!root.isArray()) {
+        JsonNode root = null;
 
-            context.output(
-                    errorTag,
-                    "JSON_ERROR | Root must be an array"
-            );
+        try {
+            root = objectMapper.readTree(file);
+        } catch (Exception e) {
+            // If the file is not a complete JSON array,
+            // try reading it as JSON Lines.
+        }
+
+        if (root != null && root.isArray()) {
+
+            for (JsonNode node : root) {
+
+                try {
+
+                    EmployeeRecord employee =
+                            objectMapper.treeToValue(
+                                    node,
+                                    EmployeeRecord.class
+                            );
+
+                    employee.setSourceCreationTime(
+                            sourceCreationTime
+                    );
+
+                    context.output(employee);
+
+                } catch (Exception e) {
+
+                    context.output(
+                            errorTag,
+                            "INVALID_JSON_RECORD | "
+                                    + node
+                                    + " | "
+                                    + e.getMessage()
+                    );
+                }
+            }
 
             return;
         }
 
-        for (JsonNode node : root) {
+        try (
+                BufferedReader reader =
+                        new BufferedReader(
+                                new FileReader(file)
+                        )
+        ) {
 
-            try {
+            String line;
 
-                EmployeeRecord employee =
-                        objectMapper.treeToValue(
-                                node,
-                                EmployeeRecord.class
-                        );
+            while ((line = reader.readLine()) != null) {
 
-                employee.setSourceCreationTime(
-                        sourceCreationTime
-                );
+                if (line.isBlank()) {
+                    continue;
+                }
 
-                context.output(employee);
+                try {
 
-            } catch (Exception e) {
+                    JsonNode node =
+                            objectMapper.readTree(line);
 
-                context.output(
-                        errorTag,
-                        "INVALID_JSON_RECORD | "
-                                + node
-                                + " | "
-                                + e.getMessage()
-                );
+                    EmployeeRecord employee =
+                            objectMapper.treeToValue(
+                                    node,
+                                    EmployeeRecord.class
+                            );
+
+                    employee.setSourceCreationTime(
+                            sourceCreationTime
+                    );
+
+                    context.output(employee);
+
+                } catch (Exception e) {
+
+                    context.output(
+                            errorTag,
+                            "INVALID_JSON_RECORD | "
+                                    + line
+                                    + " | "
+                                    + e.getMessage()
+                    );
+                }
             }
         }
     }
 
-    // ==================================================
-    // CSV PARSER
-    // ==================================================
 
     private void parseCsv(
             String fileLocation,
