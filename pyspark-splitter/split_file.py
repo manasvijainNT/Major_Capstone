@@ -25,7 +25,7 @@ def calculate_partitions(input_file):
     )
 
     partitions = max(
-        1,
+        2,
         math.ceil(file_size_bytes / target_partition_bytes)
     )
 

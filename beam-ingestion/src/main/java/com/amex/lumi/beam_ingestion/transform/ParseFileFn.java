@@ -31,7 +31,6 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
     }
 
 
-
     @Setup
     public void setup() {
 
@@ -64,7 +63,6 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
                         sourceCreationTime,
                         context
                 );
-
             }
 
             // CSV
@@ -75,20 +73,8 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
                         sourceCreationTime,
                         context
                 );
-
-
-
             }
-//            else if (lowerCaseFile.endsWith(".xml")) {
-//
-//                parseXml(
-//                        fileLocation,
-//                        sourceCreationTime,
-//                        context
-//                );
-//            }
 
-            // Unsupported format
             else {
 
                 context.output(
@@ -109,8 +95,6 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
             );
         }
     }
-
-
 
     private void parseJson(
             String fileLocation,
@@ -134,7 +118,6 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
             for (JsonNode node : root) {
 
                 try {
-
                     EmployeeRecord employee =
                             objectMapper.treeToValue(
                                     node,
@@ -232,9 +215,7 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
 
                 try {
 
-                    EmployeeRecord employee =
-                            new EmployeeRecord();
-
+                    EmployeeRecord employee = new EmployeeRecord();
 
                     employee.setEmployeeId(
                             getValue(record, "employee_id")
@@ -296,7 +277,6 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
                     }
 
 
-
                     String skills =
                             getValue(record, "skills");
 
@@ -311,12 +291,8 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
                         );
                     }
 
-                    // ----------------------------------
                     // Address
-                    // ----------------------------------
-
-                    Address address =
-                            new Address();
+                    Address address = new Address();
 
                     address.setStreet(
                             getValue(record, "address_street")
@@ -343,10 +319,8 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
 
                     employee.setAddress(address);
 
-
-
-                    EmergencyContact contact =
-                            new EmergencyContact();
+                    // EmergencyContact
+                    EmergencyContact contact = new EmergencyContact();
 
                     contact.setName(
                             getValue(
@@ -402,8 +376,6 @@ public class ParseFileFn extends DoFn<String, EmployeeRecord> {
             }
         }
     }
-
-
 
     private String getValue(
             CSVRecord record,
