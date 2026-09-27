@@ -67,7 +67,6 @@ public class EmployeeValidator {
             EmployeeRecord employee,
             List<String> errors) {
         String value = employee.getLastName();
-        // PO says minimum is 0, so blank is allowed.
         if (value == null) {
             return;
         }
